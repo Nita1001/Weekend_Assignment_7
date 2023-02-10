@@ -19,7 +19,6 @@ function getContinentName(data) {
     extractUniqueContinents(duplicatedContinents);
 }
 
-
 // Countries & Cities
 // data.data code, country, iso3, populationCount {year: , value: }
 async function getPopulationDataByCountry() {
@@ -58,13 +57,11 @@ async function getAllData() {
             getContinentName(data);
             // getCountryName();
             // getCitiesName();
-
         }
     } catch (err) {
         console.log('Error: ', err);
     }
 }
-
 
 async function getCountryByRegion(region) {
     try {
@@ -79,7 +76,6 @@ async function getCountryByRegion(region) {
     }
 }
 
-
 function makeHtmlBtn() {
     asiaBtn.innerText = continents[0][1];
     europeBtn.innerText = continents[0][0];
@@ -89,27 +85,45 @@ function makeHtmlBtn() {
 }
 
 function createCountryBtn(data) {
-    //deleting previous html 
     countriesContainer.innerHTML = '';
     console.log('DATA 4:', data);
     for (let i = 0; i < data.length; i++) {
+
+
         const str = `<button class="countriesBtn">${data[i].name}</button>`;
         countriesContainer.innerHTML += `${str}`;
+
+
     }
 }
 
 export function getCountries(id) {
-    console.log('continent is:', id);
     getCountryByRegion(id)
     .then((data) => {
-        console.log('on the making');
         createCountryBtn(data);
     })
 }
 
+async function getAllCountriesAndRespectivePop(){
+    try{
+        const res = await fetch('https://countriesnow.space/api/v0.1/countries/population');
+        if (res.ok) {
+            const data = await res.json();
+            console.log('RESPECTIVE Countries and cities', data);
+        }
+    
+    } catch(err){
+        console.log('Error:', err);
+    }
+}
+
+
+
 // code from Countries & Cities API to find continent in REST API
-let code = 'NGA';
+let code = 'SUR';
 
 getAllData().then(makeHtmlBtn);
 getPopulationDataByCountry();
 getAllDataByCode(code);
+getAllCountriesAndRespectivePop();
+
