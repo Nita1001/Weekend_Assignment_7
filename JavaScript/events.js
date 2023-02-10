@@ -9,5 +9,9 @@ export const americaBtn = document.querySelector('#america');
 
 export const countriesContainer = document.querySelector('#countriesContainer');
 
-asiaBtn.addEventListener('click', getCountries);
+asiaBtn.addEventListener('click', (e)=>{
+    const id = e.target.id;
+    console.log('clicked!', id);
+    getCountries(id);
+});
 
