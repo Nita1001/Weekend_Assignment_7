@@ -1,6 +1,6 @@
-import { asiaBtn, europeBtn, africaBtn, oceaniaBtn, americaBtn } from './events.js'
+import { asiaBtn, europeBtn, africaBtn, oceaniaBtn, americaBtn, countriesContainer } from './events.js'
 
- let continents = [];
+let continents = [];
 
 function extractUniqueContinents(duplicatedContinents) {
     let newStr = duplicatedContinents.join(' ');
@@ -17,7 +17,6 @@ function getContinentName(data) {
         duplicatedContinents.push(obj.continents);
     });
     extractUniqueContinents(duplicatedContinents);
-   
 }
 
 
@@ -76,6 +75,24 @@ function makeHtmlBtn(){
     oceaniaBtn.innerText = continents[0][2];
     africaBtn.innerText = continents[0][3];
     americaBtn.innerText = continents[0][4];
+}
+
+function createCountryBtn(){
+    // How many buttons to create? how many countries?
+    let str = '<button id="" class="countriesBtn">TEST</button>';
+    let numOfCountries = 4;
+
+    for(let i = 0; i < numOfCountries; i++){
+        countriesContainer.innerHTML +=`${str}`;
+    }
+    // keep pressing on Asia generates more buttons... need to fix this.
+
+}
+
+export function getCountries(){
+    console.log('on the making');
+
+    createCountryBtn();
 }
 
 getAllData().then(makeHtmlBtn);

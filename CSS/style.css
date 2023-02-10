@@ -51,8 +51,8 @@
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-around;
-    width: 40%;
-    height: 200px;
+    max-width: 50%;
+    height: max-content;
     background-color: var(--midnightBlue-color);
 }
 
