@@ -1,14 +1,14 @@
-let bigData = {
-    continents: [],
-    countries: [],
-};
+
+
+ let continents = [];
 
 function extractUniqueContinents(duplicatedContinents) {
     let newStr = duplicatedContinents.join(' ');
     newStr = newStr.split(' ');
     let uniqueContinents = [...new Set(newStr)];
     uniqueContinents = uniqueContinents.filter((el) => el !== 'North' && el !== 'South' && el !== 'Antarctica');
-    bigData.continents.push(uniqueContinents);
+    continents.push(uniqueContinents);
+    
 }
 
 function getContinentName(data) {
@@ -17,12 +17,13 @@ function getContinentName(data) {
         duplicatedContinents.push(obj.continents);
     });
     extractUniqueContinents(duplicatedContinents);
+   
 }
 
 
 // Countries & Cities
 // data.data code, country, iso3, populationCount {year: , value: }
-async function getAllData2() {
+async function getPopulationDataByCountry() {
     try {
         const res = await fetch('https://countriesnow.space/api/v0.1/countries/population');
         if (res.ok) {
@@ -55,17 +56,28 @@ async function getAllData() {
             const data = await res.json();
             console.log('REST API 2', data);
 
-            // getContinentName(data);
+            getContinentName(data);
             // getCountryName();
             // getCitiesName();
+          
         }
     } catch (err) {
         console.log('Error: ', err);
     }
 }
-
+// export { continents, getAllData };
 // code from Countries & Cities API to find continent in REST API
+
 let code = 'NGA';
-getAllData();
-getAllData2();
+
+function makeBtn(){
+    console.log('Yayy', continents[0][1]);
+    
+}
+
+getAllData().then(makeBtn);
+
+
+getPopulationDataByCountry();
 getAllDataByCode(code);
+export { continents, getAllData };
