@@ -50,14 +50,13 @@
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
-    justify-content: space-around;
-    max-width: 50%;
+    max-width: max-content;
     height: max-content;
     background-color: var(--midnightBlue-color);
 }
 
 .countriesBtn{
     margin-top: 2rem;
-    width: 8rem;
+    width: 18rem;
     height: 3rem;
 }

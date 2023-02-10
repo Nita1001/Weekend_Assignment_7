@@ -6,7 +6,8 @@ function extractUniqueContinents(duplicatedContinents) {
     let newStr = duplicatedContinents.join(' ');
     newStr = newStr.split(' ');
     let uniqueContinents = [...new Set(newStr)];
-    uniqueContinents = uniqueContinents.filter((el) => el !== 'North' && el !== 'South' && el !== 'Antarctica');
+    uniqueContinents = uniqueContinents.filter((el) => el !== 'North' && el !== 'South' && el !== 'Antarctica' && el !== 'America');
+    uniqueContinents.push('Americas');
     continents.push(uniqueContinents);
 }
 
@@ -57,7 +58,7 @@ async function getAllData() {
             getContinentName(data);
             // getCountryName();
             // getCitiesName();
-          
+
         }
     } catch (err) {
         console.log('Error: ', err);
@@ -65,7 +66,7 @@ async function getAllData() {
 }
 
 
-async function getCountryByRegion(region){
+async function getCountryByRegion(region) {
     try {
         const res = await fetch(`https://restcountries.com/v2/region/${region}`);
         if (res.ok) {
@@ -79,7 +80,7 @@ async function getCountryByRegion(region){
 }
 
 
-function makeHtmlBtn(){
+function makeHtmlBtn() {
     asiaBtn.innerText = continents[0][1];
     europeBtn.innerText = continents[0][0];
     oceaniaBtn.innerText = continents[0][2];
@@ -87,30 +88,23 @@ function makeHtmlBtn(){
     americaBtn.innerText = continents[0][4];
 }
 
-function createCountryBtn(id){
-
-    getCountryByRegion(id).then((data)=>{
-
-        // How many buttons to create? how many countries?
-        let str = '<button id="" class="countriesBtn">Name</button>';
-        let numOfCountries = 4;
-        console.log('DATA 4:', data);
-        console.log('continent is:', id);
-        // for(let i = 0; i < numOfCountries; i++){
-        //     countriesContainer.innerHTML +=`${str}`;
-        // }   
-        // keep pressing on Asia generates more buttons... need to fix this.
-
-
-    })
-
-  
+function createCountryBtn(data) {
+    //deleting previous html 
+    countriesContainer.innerHTML = '';
+    console.log('DATA 4:', data);
+    for (let i = 0; i < data.length; i++) {
+        const str = `<button class="countriesBtn">${data[i].name}</button>`;
+        countriesContainer.innerHTML += `${str}`;
+    }
 }
 
-export function getCountries(id){
-    console.log('on the making');
-
-    createCountryBtn(id);
+export function getCountries(id) {
+    console.log('continent is:', id);
+    getCountryByRegion(id)
+    .then((data) => {
+        console.log('on the making');
+        createCountryBtn(data);
+    })
 }
 
 // code from Countries & Cities API to find continent in REST API
