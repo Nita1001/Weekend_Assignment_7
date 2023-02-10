@@ -4,9 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./CSS/normalize.css">
+    <link rel="stylesheet" href="./CSS/reset.css">
+    <link rel="stylesheet" href="./CSS/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./JavaScript/script.js" defer type="module"></script>
+    <script src="./JavaScript/chartScript.js" defer type="module"></script>
+    <title>World Population</title>
 </head>
 <body>
-    
+    <div class="container">
+        <div class="continents"></div>
+        <div class="graph">
+            <canvas id="myChart"></canvas>
+            <div class="spinner"></div>
+        </div>
+        <div class="countries"></div>
+    </div>
 </body>
 </html>

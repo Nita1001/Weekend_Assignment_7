@@ -1,0 +1,42 @@
+:root {
+    --royalBlue-color: #091235;
+    --NavyBlue-color: #14202E;
+    --midnightBlue-color: #2B4257;
+    --blueGray-color: #88A9C3;
+  }
+
+.container{
+    width: 100%;
+    height: 100vh;
+    background-color: var(--royalBlue-color);
+}
+
+.container > div, .graph > div{
+    margin: 0 auto;
+}
+
+.continents{
+    width: 50%;
+    height: 100px;
+    background-color: var(--midnightBlue-color);
+
+}
+
+.spinner{
+    width: 50%;
+    height: 400px;
+    background-color: rgb(236, 238, 238);
+
+}
+
+.graph{
+    width: 50%;
+    height: 900px;
+    background-color: var(--NavyBlue-color);
+}
+
+.countries{
+    width: 50%;
+    height: 100px;
+    background-color: var(--midnightBlue-color);
+}
