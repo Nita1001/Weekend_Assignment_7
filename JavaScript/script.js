@@ -1,6 +1,6 @@
 let bigData = { 
     continents: [],
-    countries: []
+    // countries: [],
 };
 
 
@@ -20,19 +20,37 @@ function getContinentName(data){
     extractUniqueContinents(duplicatedContinents);
 }
 
-function getCountryName(data){
-    let countries = [];
+async function getCountryName(){
 
-    console.log('bigData continent', bigData.continents[0][0]);
-
-    data.forEach( obj => {
-
-        if(obj.continents == bigData.continents[0][1]){
-            countries.push(obj.name.official);
+    let region = bigData.continents[0][4];
+    try{
+        const res = await fetch(`https://restcountries.com/v3.1/region/${region}/`);
+        if(res.ok){
+            const data1 = await res.json();
+            console.log('data1', data1);
+            data1.forEach((obj) => {
+                console.log(obj.population, obj.name.official);
+            })
+        }else {
+            throw new Error(res.status);
         }
+  
+    }catch (err){
+        console.log('error:', err);
+    }
+    
 
-    });
-    console.log(`countries in ${bigData.continents[0][0]}`, countries);
+    // console.log('bigData continent', bigData.continents[0][0]);
+
+    // data.forEach( obj => {
+
+    //     if(obj.continents == bigData.continents[0][1]){
+    //         countries.push(obj.name.official);
+    //     }
+
+    // });
+    // console.log(`countries in ${bigData.continents[0][3]}`, countries);
+
 }
 
 
@@ -43,7 +61,7 @@ async function getAllData(){
             const data = await res.json();
             getContinentName(data);
             console.log(data);
-            getCountryName(data);
+            getCountryName();
         } else {
             throw new Error(res.status);
         }
