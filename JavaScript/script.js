@@ -1,4 +1,4 @@
-
+import { asiaBtn, europeBtn, africaBtn, oceaniaBtn, americaBtn } from './events.js'
 
  let continents = [];
 
@@ -70,14 +70,14 @@ async function getAllData() {
 
 let code = 'NGA';
 
-function makeBtn(){
-    console.log('Yayy', continents[0][1]);
-    
+function makeHtmlBtn(){
+    asiaBtn.innerText = continents[0][1];
+    europeBtn.innerText = continents[0][0];
+    oceaniaBtn.innerText = continents[0][2];
+    africaBtn.innerText = continents[0][3];
+    americaBtn.innerText = continents[0][4];
 }
 
-getAllData().then(makeBtn);
-
-
+getAllData().then(makeHtmlBtn);
 getPopulationDataByCountry();
 getAllDataByCode(code);
-export { continents, getAllData };
