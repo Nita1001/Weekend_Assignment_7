@@ -1,5 +1,5 @@
 :root {
-    --royalBlue-color: #091235;
+    --royalBlue-color: #445fc9b7;
     --NavyBlue-color: #14202e;
     --midnightBlue-color: rgba(43, 66, 87, 0.2);
     --blueGray-color: rgba(136, 169, 195, 0.3);
@@ -57,10 +57,10 @@
 .countries {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     max-width: 50%;
-    height: 30vh;
+    height: 60vh;
     background-color: var(--midnightBlue-color);
 }
 
