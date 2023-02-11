@@ -10,32 +10,15 @@ export const americaBtn = document.querySelector('#americas');
 
 export const countriesContainer = document.querySelector('#countriesContainer');
 
-asiaBtn.addEventListener('click', (e)=>{
-    resetChart();
-    const id = e.target.id;
-    getCountries(id);
-});
 
-europeBtn.addEventListener('click', (e)=>{
+function handleContinentEvent(e){
     resetChart();
     const id = e.target.id;
     getCountries(id);
-});
+}
 
-oceaniaBtn.addEventListener('click', (e)=>{
-    resetChart();
-    const id = e.target.id;
-    getCountries(id);
-});
-
-africaBtn.addEventListener('click', (e)=>{
-    resetChart();
-    const id = e.target.id;
-    getCountries(id);
-});
-
-americaBtn.addEventListener('click', (e)=>{
-    resetChart();
-    const id = e.target.id;
-    getCountries(id);
-});
+asiaBtn.addEventListener('click', handleContinentEvent);
+europeBtn.addEventListener('click',handleContinentEvent);
+oceaniaBtn.addEventListener('click',handleContinentEvent);
+africaBtn.addEventListener('click',handleContinentEvent);
+americaBtn.addEventListener('click',handleContinentEvent);
