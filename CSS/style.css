@@ -1,14 +1,17 @@
 :root {
     --royalBlue-color: #091235;
     --NavyBlue-color: #14202e;
-    --midnightBlue-color: #2b4257;
-    --blueGray-color: #88a9c3;
+    --midnightBlue-color: rgba(43, 66, 87, 0.2);
+    --blueGray-color: rgba(136, 169, 195, 0.3);
 }
 
 .container {
     width: 100%;
     height: 100vh;
     background-color: var(--royalBlue-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .container > div,
@@ -22,7 +25,6 @@
     justify-content: space-around;
     width: 30%;
     height: 100px;
-    background-color: var(--midnightBlue-color);
 }
 
 .continents button {
@@ -41,24 +43,39 @@
 }
 
 .graph {
+    margin-top: 4rem;
     width: 50%;
     height: 500px;
     background-color: var(--NavyBlue-color);
 }
-
+.chart {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    height: 400px;
+}
 .countries {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
-    max-width: max-content;
-    height: max-content;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 50%;
+    height: 30vh;
     background-color: var(--midnightBlue-color);
 }
 
 .countriesBtn {
-    margin-top: 2rem;
-    width: 18rem;
-    height: 3rem;
+    width: 20rem;
+    height: 4rem;
+}
+
+button {
+    border-radius: 2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    font-size: 1.3rem;
+    background-color: #14202e;
+    color: whitesmoke;
 }
 
 .hidden {
