@@ -72,10 +72,8 @@ async function getAllData() {
         if (res.ok) {
             const data = await res.json();
             console.log('REST API getAllData', data);
-
             getContinentName(data);
             getCountryName(data);
-            // getCitiesName();
         }
     } catch (err) {
         console.log('Error: ', err);
@@ -103,11 +101,11 @@ function makeHtmlBtn() {
     americaBtn.innerText = continents[0][4];
 }
 
-function createCountryBtn(data) {
+function createCountryBtn(currentCountries) {
     countriesContainer.innerHTML = '';
-    console.log('Create Country Btn', data);
-    data.forEach((el) => {
-        const str = `<button class="countriesBtn">${el}</button>`;
+    console.log('Create Country Btn', currentCountries);
+    currentCountries.forEach((country) => {
+        const str = `<button class="countriesBtn">${country}</button>`;
         countriesContainer.innerHTML += `${str}`;
     })
 }
@@ -115,12 +113,12 @@ function createCountryBtn(data) {
 export function getCountries(id) {
 
     let currentCountries = [];
-    bigData.countries.forEach((el) => {
-        let str = el[2].toLowerCase();
-        console.log(el[2], id);
+    bigData.countries.forEach((country) => {
+        let str = country[2].toLowerCase();
+        console.log(country[2], id);
         if (str.includes(id)) {
             console.log('this', str);
-            currentCountries.push(el[0]);
+            currentCountries.push(country[0]);
         }
     })
     createCountryBtn(currentCountries)
