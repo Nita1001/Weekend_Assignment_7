@@ -24,7 +24,7 @@ function getContinentName(data) {
     extractUniqueContinents(duplicatedContinents);
 }
 
-// Countries & Cities
+// **API 1** Countries & Cities
 // data.data code, country, iso3, populationCount {year: , value: }
 async function getPopulationDataByCountry() {
     try {
@@ -38,35 +38,40 @@ async function getPopulationDataByCountry() {
     }
 }
 
-// REST API CODE
+// **REST API** ISO CODE
 async function getAllDataByIsoCode(iso2, iso3) {
     try {
         const res = await fetch(`https://restcountries.com/v2/alpha?codes=${iso2},${iso3}`);
         if (res.ok) {
             const data = await res.json();
-            console.log('Data REST API 2 by Code', data);
+            console.log('Data REST API by Iso Code', data);
         }
     } catch (err) {
         console.log('Error: ', err);
     }
 }
 
-function getCountryName(data){
-    data.forEach((obj)=>{
-        countries.push([obj.name.common, obj.cca3, obj.continents[0]
-        ]);
+function getCountryName(data) {
+    data.forEach((obj) => {
+        let continent = obj.continents[0];
+        if (continent.includes('America')) {
+            continent = 'Americas';
+        } else {
+            continent = obj.continents[0];
+        }
+        countries.push([obj.name.common, obj.cca3, continent]);
     })
-    console.log('countries!!!!! and cca3 and continent',countries);
+    console.log('countries [Name, cca3, continent]', countries);
 };
 
 
-// REST API ALL
+// **REST API** ALL
 async function getAllData() {
     try {
         const res = await fetch('https://restcountries.com/v3.1/all');
         if (res.ok) {
             const data = await res.json();
-            console.log('REST API 2', data);
+            console.log('REST API getAllData', data);
 
             getContinentName(data);
             getCountryName(data);
@@ -82,7 +87,7 @@ async function getCountryByRegion(region) {
         const res = await fetch(`https://restcountries.com/v2/region/${region}`);
         if (res.ok) {
             const data = await res.json();
-            console.log('REST API 3', data);
+            console.log('REST API getCountryByRegion', data);
             return data;
         }
     } catch (err) {
@@ -100,32 +105,39 @@ function makeHtmlBtn() {
 
 function createCountryBtn(data) {
     countriesContainer.innerHTML = '';
-    console.log('DATA 4:', data);
-    for (let i = 0; i < data.length; i++) {
-
-        const str = `<button class="countriesBtn">${data[i].name}</button>`;
+    console.log('Create Country Btn', data);
+    data.forEach((el) => {
+        const str = `<button class="countriesBtn">${el}</button>`;
         countriesContainer.innerHTML += `${str}`;
-
-    }
+    })
 }
 
 export function getCountries(id) {
-    getCountryByRegion(id)
-        .then((data) => {
-            createCountryBtn(data);
-        })
+
+    let currentCountries = [];
+    bigData.countries.forEach((el) => {
+        let str = el[2].toLowerCase();
+        console.log(el[2], id);
+        if (str.includes(id)) {
+            console.log('this', str);
+            currentCountries.push(el[0]);
+        }
+    })
+    createCountryBtn(currentCountries)
+
 }
-// API 1
+
+// **API 1** countryPopulation[iso3, populationCounts[year, value]]
 async function getAllCountriesAndRespectivePop() {
     try {
         const res = await fetch('https://countriesnow.space/api/v0.1/countries/population');
         if (res.ok) {
             const data = await res.json();
-            console.log('RESPECTIVE Countries and cities', data.data);
+            console.log('RESPECTIVE Countries and population', data.data);
             for (let i = 0; i < data.data.length; i++) {
                 countryPopulation.push([data.data[i].iso3, data.data[i].populationCounts]);
             }
-            console.log('population', countryPopulation);
+            console.log('countryPopulation [iso3, populationCounts[year, value]]', countryPopulation);
         }
 
     } catch (err) {
@@ -133,7 +145,7 @@ async function getAllCountriesAndRespectivePop() {
     }
 }
 
-//API 1
+// **API 1** countryCodes[iso2, iso3]
 async function getAllCountriesIso() {
     try {
         const res = await fetch('https://countriesnow.space/api/v0.1/countries/iso');
@@ -144,9 +156,8 @@ async function getAllCountriesIso() {
             for (let i = 0; i < data.data.length; i++) {
                 countryCodes.push([data.data[i].Iso2, data.data[i].Iso3]);
             }
-            console.log(countryCodes);
+            console.log('countryCodes [iso2, iso3]', countryCodes);
         }
-
     } catch (err) {
         console.log('Error:', err);
     }
@@ -155,16 +166,19 @@ async function getAllCountriesIso() {
 // code from Countries & Cities API to find continent in REST API
 
 
-getAllData().then(makeHtmlBtn);
+getAllData().then(() => {
+    getAllCountriesIso().then(() => {
+        getAllDataByIsoCode(countryCodes[0][1], countryCodes[0][0]).then(() => {
+            bigData['continents'] = continents;
+            bigData['country codes'] = countryCodes;
+            bigData['country population'] = countryPopulation;
+            bigData['countries'] = countries;
+        }).then(makeHtmlBtn);
+    });
+});
+
 getPopulationDataByCountry();
 getAllCountriesAndRespectivePop();
 
-getAllCountriesIso().then(() => {
-    getAllDataByIsoCode(countryCodes[0][1], countryCodes[0][0]).then(() => {
-        bigData['continents'] = continents;
-        bigData['country codes'] = countryCodes;
-        bigData['country population'] = countryPopulation;
 
-    });
-});
 console.log(bigData);
