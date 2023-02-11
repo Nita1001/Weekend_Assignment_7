@@ -34,12 +34,12 @@ async function getPopulationDataByCountry() {
 }
 
 // REST API CODE
-async function getAllDataByCode(code) {
+async function getAllDataByCode(code1, code2, code3) {
     try {
-        const res = await fetch(`https://restcountries.com/v2/alpha/${code}`);
+        const res = await fetch(`https://restcountries.com/v2/alpha?codes=${code1},${code2},${code3}`);
         if (res.ok) {
             const data = await res.json();
-            console.log('Data API 2', data);
+            console.log('Data REST API 2 by Code', data);
         }
     } catch (err) {
         console.log('Error: ', err);
@@ -89,10 +89,8 @@ function createCountryBtn(data) {
     console.log('DATA 4:', data);
     for (let i = 0; i < data.length; i++) {
 
-
         const str = `<button class="countriesBtn">${data[i].name}</button>`;
         countriesContainer.innerHTML += `${str}`;
-
 
     }
 }
@@ -109,7 +107,11 @@ async function getAllCountriesAndRespectivePop(){
         const res = await fetch('https://countriesnow.space/api/v0.1/countries/population');
         if (res.ok) {
             const data = await res.json();
-            console.log('RESPECTIVE Countries and cities', data);
+            console.log('RESPECTIVE Countries and cities', data.data);
+            for(let i = 0; i < data.data.length; i++){
+                population.push([data.data[i].iso3 ,data.data[i].populationCounts]);
+            }
+            console.log('population',population);
         }
     
     } catch(err){
@@ -118,12 +120,39 @@ async function getAllCountriesAndRespectivePop(){
 }
 
 
+async function getAllCountriesIso(){
+    try{
+        const res = await fetch('https://countriesnow.space/api/v0.1/countries/iso');
+
+        if (res.ok) {
+            const data = await res.json();
+            console.log('API 1 Countries and cities', data.data);
+            for(let i = 0; i < data.data.length; i++){
+                codes.push([data.data[i].Iso2,data.data[i].Iso3]);
+            }
+            console.log(codes);
+        }
+    
+    } catch(err){
+        console.log('Error:', err);
+    }
+}
 
 // code from Countries & Cities API to find continent in REST API
-let code = 'SUR';
-
+let code1 = 'AFG';
+let code2 = ''
+let code3 = ''
+let codes = [];
+let population = [];
+let countries = [];
+let bigData = {
+    codes: code1,
+    populationCounts: population,
+    countries: countries
+}
 getAllData().then(makeHtmlBtn);
 getPopulationDataByCountry();
-getAllDataByCode(code);
+getAllDataByCode(code1, code2, code3);
 getAllCountriesAndRespectivePop();
 
+getAllCountriesIso();
